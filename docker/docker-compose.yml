@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  vaccination-server:
+    container_name: vaccination
+    image: kruger-vaccination:0.0.1-REALESE
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    build:
+      context: ../vaccination
+      dockerfile: ../vaccination/Dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+      - "SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/postgres"
+      - "SPRING_DATASOURCE_USERNAME=postgres"
+      - "SPRING_DATASOURCE_PASSWORD=qwerty"
+    ports:
+      - '9080:9080'
+  postgres-db:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_DB: postgres
+    volumes:
+      #allow *.sql, *.sql.gz, or *.sh and is execute only if data directory is empty
+      - ./dbfiles:/init-user-db.sh
+      - /var/lib/postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5

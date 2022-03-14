@@ -1,0 +1,42 @@
+logging:
+  level:
+    ROOT: DEBUG
+    org.hibernate.SQL: DEBUG
+    ec.kruger.vaccination: DEBUG
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+  jackson:
+    serialization:
+      indent-output: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/vaccination
+    username: usr_vac
+    password: Uv@cc1n@t10n..
+    hikari:
+      poolName: Hikari
+      auto-commit: true
+    liquibase:
+      contexts: dev
+      default-schema: krg_vaccination_security
+      database-change-log-lock-table: databasechangeloglock
+      database-change-log-table: databasechangelog
+      drop-first: false
+      test-rollback-on-update: false
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+  liquibase:
+    contexts: dev
+
+server:
+  port: 9080
+# application:
+application:
+  resources-id: vaccination
+  admin: ROLE_ADMIN
+  employee: ROLE_EMPLOYEE
+  vaccines: SPUTNIK,ASTRAZENECA,PFIZER,JHONSON&JHONSON

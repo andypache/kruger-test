@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet id="00000000000000" author="vaccination-app">
+        <createTable tableName="person" schemaName="krg_vaccination_management">
+            <column name="id" type="uuid" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="identifier" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(200)">
+                <constraints unique="true" nullable="false" uniqueConstraintName="ux_person_email"/>
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="user" schemaName="krg_vaccination_security">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_employee" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="varchar(50)">
+                <constraints unique="true" nullable="false" uniqueConstraintName="ux_user_username"/>
+            </column>
+            <column name="password" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="boolean" valueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="role" schemaName="krg_vaccination_security">
+            <column name="name" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_role" schemaName="krg_vaccination_security">
+            <column name="id_user" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id_user, role_name" tableName="user_role" schemaName="krg_vaccination_security"/>
+
+        <createTable tableName="vaccine" schemaName="krg_vaccination_management">
+            <column name="name" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="employee" schemaName="krg_vaccination_management">
+            <column name="id" type="uuid" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_person" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_date" type="timestamp"/>
+            <column name="direction" type="varchar(200)"/>
+            <column name="telephone" type="varchar(15)"/>
+            <column name="vaccinated" type="boolean" valueBoolean="false"/>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="employee_vaccine" schemaName="krg_vaccination_management">
+            <column name="id" type="uuid" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_employee" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vaccine_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vaccine_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="id_employee"
+                                 baseTableName="user"
+                                 baseTableSchemaName="krg_vaccination_security"
+                                 constraintName="fk_user_employee"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"
+                                 referencedTableSchemaName="krg_vaccination_management"/>
+
+        <addForeignKeyConstraint baseColumnNames="role_name"
+                                 baseTableName="user_role"
+                                 baseTableSchemaName="krg_vaccination_security"
+                                 constraintName="fk_user_role_name"
+                                 referencedColumnNames="name"
+                                 referencedTableName="role"
+                                 referencedTableSchemaName="krg_vaccination_security"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_user"
+                                 baseTableName="user_role"
+                                 baseTableSchemaName="krg_vaccination_security"
+                                 constraintName="fk_user_role_user"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"
+                                 referencedTableSchemaName="krg_vaccination_security"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_person"
+                                 baseTableName="employee"
+                                 baseTableSchemaName="krg_vaccination_management"
+                                 constraintName="fk_employee_person"
+                                 referencedColumnNames="id"
+                                 referencedTableName="person"
+                                 referencedTableSchemaName="krg_vaccination_management"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_employee"
+                                 baseTableName="employee_vaccine"
+                                 baseTableSchemaName="krg_vaccination_management"
+                                 constraintName="fk_employee_vaccine_employee"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"
+                                 referencedTableSchemaName="krg_vaccination_management"/>
+
+        <addForeignKeyConstraint baseColumnNames="vaccine_name"
+                                 baseTableName="employee_vaccine"
+                                 baseTableSchemaName="krg_vaccination_management"
+                                 constraintName="fk_employee_vaccine_vaccine"
+                                 referencedColumnNames="name"
+                                 referencedTableName="vaccine"
+                                 referencedTableSchemaName="krg_vaccination_management"/>
+
+        <loadData file="config/liquibase/data/role.csv"
+                  separator=";"
+                  tableName="role"
+                  schemaName="krg_vaccination_security"
+                  usePreparedStatements="true"/>
+
+        <loadData file="config/liquibase/data/vaccine.csv"
+                  separator=";"
+                  tableName="vaccine"
+                  schemaName="krg_vaccination_management"
+                  usePreparedStatements="true"/>
+
+        <loadData file="config/liquibase/data/person.csv"
+                  separator=";"
+                  tableName="person"
+                  schemaName="krg_vaccination_management"
+                  usePreparedStatements="true"/>
+
+        <loadData file="config/liquibase/data/employee.csv"
+                  separator=";"
+                  tableName="employee"
+                  schemaName="krg_vaccination_management"
+                  usePreparedStatements="true"/>
+
+
+        <loadData file="config/liquibase/data/user.csv"
+                  separator=";"
+                  tableName="user"
+                  schemaName="krg_vaccination_security"
+                  usePreparedStatements="true"/>
+
+        <loadData file="config/liquibase/data/user_role.csv"
+                  separator=";"
+                  tableName="user_role"
+                  schemaName="krg_vaccination_security"
+                  usePreparedStatements="true"/>
+    </changeSet>
+</databaseChangeLog>

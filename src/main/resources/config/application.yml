@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: vaccination
+  profiles:
+    active:
+  messages:
+    basename: messages
+    fallback-to-system-locale: false
+    encoding: UTF-8
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          ['liquibase']
+
+server:
+  servlet:
+    context-path: /vaccination
+    session:
+      cookie:
+        http-only: true
+  error:
+    include-message: always
+    include-binding-errors: always
+
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:9080/vaccination/oauth/check_token
+      userInfoUri: http://localhost:9080/vaccination/user/current
+      token-type: Bearer
+    authorization:
+      check-token-access: isAuthenticated()
+    client:
+      clientId: vaccination-wepapp
+      clientSecret: v@cc1n@t1onWep@pp2022..*
+      accessTokenUri: http://localhost:9080/vaccination/oauth/token
+      userAuthorizationUri: http://localhost:9080/vaccination/oauth/authorize

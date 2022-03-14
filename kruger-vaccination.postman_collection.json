@@ -1,0 +1,521 @@
+{
+	"info": {
+		"_postman_id": "737b2420-7f54-4691-99e6-b929b70edfc8",
+		"name": "kruger-vaccination",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "oauth2",
+			"item": [
+				{
+					"name": "/oauth/token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "v@cc1n@t1onWep@pp2022..*",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "vaccination-wepapp",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9080/vaccination/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"vaccination",
+								"oauth",
+								"token"
+							]
+						},
+						"description": "oauth/token"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "current",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "af777d85-aad3-4aae-a04c-f885f91e038a",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:9080/vaccination/managements/user/current",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"vaccination",
+								"managements",
+								"user",
+								"current"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "managements",
+			"item": [
+				{
+					"name": "person-create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "840165e0-f7cc-4beb-91c5-565fcf1ffdf2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"identifier\": \"1111111113\",\n    \"name\": \"Andrés Felipe\",\n    \"lastName\": \"Pacheco Zamora\",\n    \"email\": \"andypache6@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9080/vaccination/managements/person",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"vaccination",
+								"managements",
+								"person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "person-update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "840165e0-f7cc-4beb-91c5-565fcf1ffdf2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"identifier\": \"1111111111\",\n    \"name\": \"Andrés Felipes\",\n    \"lastName\": \"Pacheco Zamora\",\n    \"email\": \"andypache1@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9080/vaccination/managements/person/026a4aa7-7504-44d2-bd4a-af81f6d24744",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"vaccination",
+								"managements",
+								"person",
+								"026a4aa7-7504-44d2-bd4a-af81f6d24744"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "person-delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "4d8c53ad-04e8-4367-8b51-32b24451c4bc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/vaccination/managements/person/b9a75038-ce8f-4a0c-a09c-fd3d87bb6554",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"vaccination",
+								"managements",
+								"person",
+								"b9a75038-ce8f-4a0c-a09c-fd3d87bb6554"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "person-all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "e84a80bc-14a6-401c-93a0-cf0c41f3ee32",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/vaccination/managements/person?sort=name&page=0&size=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"vaccination",
+								"managements",
+								"person"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "name"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "employee-is-vaccinated",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "88597ac8-66bf-4b61-8ebe-e8ce0844be72",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/vaccination/managements/employee/vaccinated/true?sort=id&page=0&size=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"vaccination",
+								"managements",
+								"employee",
+								"vaccinated",
+								"true"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "id"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "employee-vaccine-name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9ef1b06a-7348-42c7-bf81-86b030394aa2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/vaccination/managements/employee/vaccine/SPUTNIK?sort=id&page=0&size=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"vaccination",
+								"managements",
+								"employee",
+								"vaccine",
+								"SPUTNIK"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "id"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "employee-vaccine-date",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "88597ac8-66bf-4b61-8ebe-e8ce0844be72",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"startDate\": \"2021/12/11\",\n    \"endDate\": \"2021/12/12\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9080/vaccination/managements/employee/vaccine/date?sort=id&page=0&size=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"vaccination",
+								"managements",
+								"employee",
+								"vaccine",
+								"date"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "id"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "employees",
+			"item": [
+				{
+					"name": "employee-no-vaccine",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "5b469ce4-4156-4065-a498-326081c5c05e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vaccinated\": false,\n    \"birthDate\": \"2021/12/12\",\n    \"direction\": \"Misicata\",\n    \"telephone\": \"0989712398\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9080/vaccination/employees/employee/125f452f-b731-4c37-8f7e-9b8284b97179",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"vaccination",
+								"employees",
+								"employee",
+								"125f452f-b731-4c37-8f7e-9b8284b97179"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "employee-vaccine",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "5b469ce4-4156-4065-a498-326081c5c05e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vaccinated\": true,\n    \"birthDate\": \"2021/12/12\",\n    \"direction\": \"Misicata\",\n    \"telephone\": \"0989712398\",\n    \"vaccine\": {\n        \"vaccineName\": \"SPUTNIK\",\n        \"vaccineDate\": \"2021/12/12\",\n        \"number\": 1\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9080/vaccination/employees/employee/125f452f-b731-4c37-8f7e-9b8284b97179",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"vaccination",
+								"employees",
+								"employee",
+								"125f452f-b731-4c37-8f7e-9b8284b97179"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
